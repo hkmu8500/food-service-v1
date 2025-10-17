@@ -26,6 +26,12 @@ uvicorn app.main:app --reload --port 5001
 
 When you make changes to your project, the server will automatically reload.
 
+### API Docs
+
+- Swagger UI: `http://localhost:5001/api/docs`
+- ReDoc: `http://localhost:5001/api/redoc`
+- OpenAPI JSON: `http://localhost:5001/api/openapi.json`
+
 ## Deploying to Vercel
 
 Deploy your project to Vercel with the following command:
