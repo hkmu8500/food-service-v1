@@ -21,7 +21,7 @@ pip install -r requirements.txt
 Start the development server on http://0.0.0.0:5001
 
 ```bash
-uvicorn main:app --reload --port 5001
+uvicorn app.main:app --reload --port 5001
 ```
 
 When you make changes to your project, the server will automatically reload.
