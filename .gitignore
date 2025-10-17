@@ -1,11 +1,136 @@
-.vercel/
-.venv/
-venv/
+# ---> Python
+# Byte-compiled / optimized / DLL files
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
+*.py[cod]
+*$py.class
+*.so
+
+# Distribution / packaging / build outputs
 .Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# Environments (Virtual environments)
+.env
+.venv
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# ---> PyCharm (JetBrains IDEs)
+# Reference: https://www.jetbrains.com/help/idea/ignoring-files.html
+.idea/
+*.iml
+*.iws
+*.ipr
+modules.xml
+
+# Directory-based project format
+.idea
+
+# JetBrains IDEs working directory
+out/
+
+# ---> Uvicorn / Logs
+# Uvicorn reload directories (if using --reload)
+.uvicorn/
+
+# Log files
+*.log
+
+# ---> Operating Systems
+# macOS
 .DS_Store
-.env*
-food
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Windows
+Thumbs.db
+ehthumbs.vsdb
+Desktop.ini
+
+# ---> General
+# Temporary files
+*.tmp
+*.swp
+*.swo
+*~
+
+# Local configuration files (e.g., containing secrets)
+local_settings.py
+config_local.py
+
+# SQLite databases (common for local development)
+*.sqlite3
+*.sqlite3-journal
+db.sqlite3
