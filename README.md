@@ -21,8 +21,8 @@ uvicorn app.main:app --reload --port 5001
 
 Currently there are 2 branches will trigger the deployment to vercel cloud accordingly.
 
-- "main" branch will trigger the deployment to production environment.
-- "dev" branch will trigger the deployment to development environment.
+- "main" branch will trigger the deployment to production environment,which is hosted on https://food-service-v1.vercel.app/
+- "dev" branch will trigger the deployment to development environment,which is hosted on https://dev-food-service-v1.vercel.app/
 
 1. Create a new branch from dev branch for your feature or bug fix.
 2. Make your changes and commit them with clear and concise messages.
@@ -33,7 +33,6 @@ Currently there are 2 branches will trigger the deployment to vercel cloud accor
 7. Deploy the main branch to production(automatically).
 
 ### API Docs
-
-- Swagger UI: `http://localhost:5001/api/docs`
-- ReDoc: `http://localhost:5001/api/redoc`
-- OpenAPI JSON: `http://localhost:5001/api/openapi.json`
+- Swagger UI: https://food-service-v1.vercel.app/api/docs
+- ReDoc: https://food-service-v1.vercel.app/api/redoc
+- OpenAPI JSON: https://food-service-v1.vercel.app/api/openapi.json
