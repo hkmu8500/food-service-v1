@@ -1,16 +1,9 @@
-# FastHTML Boilerplate
+# HKMU Food ordering and tracking app
 
-Deploy your [FastAPI](https://fastapi.tiangolo.com/) project to Vercel with zero configuration.
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vercel/vercel/tree/main/examples/fastapi&template=fastapi)
-
-_Live Example: https://ai-sdk-preview-python-streaming.vercel.app/_
-
-Visit the [FastAPI documentation](https://fastapi.tiangolo.com/) to learn more.
 
 ## Getting Started
 
-Install the required dependencies:
+Clone and install the required dependencies:
 
 ```bash
 pip install -r requirements.txt
@@ -24,23 +17,23 @@ Start the development server on http://0.0.0.0:5001
 uvicorn app.main:app --reload --port 5001
 ```
 
-When you make changes to your project, the server will automatically reload.
+## Workflow (recommended but not forced)
+
+Currently there are 2 branches will trigger the deployment to vercel cloud accordingly.
+
+- "main" branch will trigger the deployment to production environment.
+- "dev" branch will trigger the deployment to development environment.
+
+1. Create a new branch from dev branch for your feature or bug fix.
+2. Make your changes and commit them with clear and concise messages.
+3. Push your branch to the remote repository.
+4. Create a pull request (PR) to merge your branch into the dev branch.
+5. Test the changes in the dev environment.
+6. If everything looks good, merge the dev branch into the main branch.
+7. Deploy the main branch to production(automatically).
 
 ### API Docs
 
 - Swagger UI: `http://localhost:5001/api/docs`
 - ReDoc: `http://localhost:5001/api/redoc`
 - OpenAPI JSON: `http://localhost:5001/api/openapi.json`
-
-## Deploying to Vercel
-
-Deploy your project to Vercel with the following command:
-
-```bash
-npm install -g vercel
-vercel --prod
-```
-
-Or `git push` to your repostory with our [git integration](https://vercel.com/docs/deployments/git).
-
-To view the source code for this template, [visit the example repository](https://github.com/vercel/vercel/tree/main/examples/fastapi).
