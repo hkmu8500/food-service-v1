@@ -24,13 +24,20 @@ Currently there are 2 branches will trigger the deployment to vercel cloud accor
 - "main" branch will trigger the deployment to production environment,which is hosted on https://food-service-v1.vercel.app/
 - "dev" branch will trigger the deployment to development environment,which is hosted on https://dev-food-service-v1.vercel.app/
 
+### For normal features or bug fixes
+
 1. Create a new branch from dev branch for your feature or bug fix.
+2. Implement your changes and test them locally.
 2. Make your changes and commit them with clear and concise messages.
 3. Push your branch to the remote repository.
 4. Create a pull request (PR) to merge your branch into the dev branch.
 5. Test the changes in the dev environment.
 6. If everything looks good, merge the dev branch into the main branch.
 7. Deploy the main branch to production(automatically).
+
+### For bughotfixes
+
+the only difference between hotfixes and normal features or bug fixes is that hotfixes should be branched from the main branch, and then create a pull request (PR) to merge your hotfix branch into the main branch.
 
 ### API Docs
 - Swagger UI: https://food-service-v1.vercel.app/api/docs
