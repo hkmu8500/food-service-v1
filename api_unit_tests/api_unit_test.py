@@ -1,4 +1,5 @@
 import requests
+#Start server then test
 
 def test_signup_success():
     url = "http://localhost:5001/api/auth/signup"
