@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
-from .schemas import BaseResponse  # Import our base response model
+from app.models.schemas.base_response import BaseResponse
 
 
 async def global_exception_handler(request: Request, exc: Exception):

@@ -1,3 +1,5 @@
+sqlmodel
+sqlalchemy
 pydantic
 fastapi
 uvicorn
