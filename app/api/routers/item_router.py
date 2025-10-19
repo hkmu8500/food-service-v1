@@ -8,5 +8,6 @@ router = APIRouter(prefix = "/api")
 
 @router.get("/menu", response_model = BaseResponse[list[Item]])
 def get_menu() -> BaseResponse[list[Item]]:
-    items = [Item(id = 1, name = "dev dish", description="A delicious test dish", price = "1.00", category = "dish", imageUrl = "", available = True)]
+    items = [Item(id = 1, name = "dev dish", description = "A delicious test dish", price = "1.00", category = "dish",
+                  imageUrl = "", available = True)]
     return BaseResponse.create_success(data = items)
