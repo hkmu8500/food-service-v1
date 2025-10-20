@@ -28,7 +28,8 @@ else:
         poolclass = StaticPool,
         echo = True)
     
-    drop_all_tables()
+    # Drop all tables at import time as requested
+    SQLModel.metadata.drop_all(engine)
 
 def get_db_session():
     """Dependency that provides a DB session for each request"""
@@ -43,8 +44,3 @@ def get_db_session_sync():
 def create_tables():
     """Create all database tables"""
     SQLModel.metadata.create_all(engine)
-
-
-def drop_all_tables():
-    """Drop all database tables"""
-    SQLModel.metadata.drop_all(engine)
