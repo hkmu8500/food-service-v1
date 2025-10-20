@@ -39,6 +39,18 @@ Currently there are 2 branches will trigger the deployment to vercel cloud accor
 
 the only difference between hotfixes and normal features or bug fixes is that hotfixes should be branched from the main branch, and then create a pull request (PR) to merge your hotfix branch into the main branch.
 
+### For database
+
+when running the server locally, the sqlite will be set up in memory mode.
+
+```bash
+uvicorn app.main:app --reload --port 5001
+```
+
+when deploy to vercel cloud, the database will be set up in turso cloud.
+The ".env.prod" and ".env.dev" do not affect the real database connection, they are just used for database information exposure.
+
+
 ### API Docs
 - Swagger UI: https://food-service-v1.vercel.app/api/docs
 - ReDoc: https://food-service-v1.vercel.app/api/redoc
