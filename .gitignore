@@ -135,3 +135,4 @@ config_local.py
 *.sqlite3-journal
 db.sqlite3
 .vscode
+food
