@@ -14,11 +14,11 @@ def init_item():
     service = get_item_service(get_db_session_sync())
     service.create_item(ItemModel(name = "Bugger", description = "Bugger description", price = 100,
                                   category = CategoryEnum.MAIN_COURSES,
-                                  image_url = "https://images.pexels.com/photos/1639557/pexels-photo-1639557.jpeg",
-                                  available = True))
+                                  imageUrl = "https://images.pexels.com/photos/1639557/pexels-photo-1639557.jpeg",
+                                  available = True),)
     service.create_item(ItemModel(name = "Milk Tea", description = "Milk Tea description", price = 50,
                                   category = CategoryEnum.BEVERAGES,
-                                  image_url = "https://images.pexels.com/photos/4974543/pexels-photo-4974543.jpeg",
+                                  imageUrl = "https://images.pexels.com/photos/4974543/pexels-photo-4974543.jpeg",
                                   available = True))
 
 
