@@ -27,3 +27,4 @@ def init_user():
     service.signup(name = "hkmu")
     service.signup(name = "8500")
     service.signup(name = "test")
+    service.signup(name = "admin")
