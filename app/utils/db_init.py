@@ -26,3 +26,5 @@ def init_user():
     service = get_user_service(get_db_session_sync())
     service.signup(name = "hkmu")
     service.signup(name = "8500")
+    service.signup(name = "test")
+    service.signup(name = "admin")

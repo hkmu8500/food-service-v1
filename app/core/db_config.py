@@ -27,9 +27,6 @@ else:
         },
         poolclass = StaticPool,
         echo = True)
-    
-    # Drop all tables at import time as requested
-    SQLModel.metadata.drop_all(engine)
 
 def get_db_session():
     """Dependency that provides a DB session for each request"""
