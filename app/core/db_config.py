@@ -24,9 +24,7 @@ else:
         f"sqlite+{TURSO_DATABASE_URL}?secure=true",
         connect_args={
             "auth_token": TURSO_AUTH_TOKEN,
-        },
-        poolclass = StaticPool,
-        echo = True)
+        })
 
 def get_db_session():
     """Dependency that provides a DB session for each request"""
