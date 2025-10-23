@@ -12,7 +12,7 @@ class OrderStatusEnum(str, Enum):
 
 class OrderModel(SQLModel, table = True):
     """Database model for order"""
-    __tablename__ = "order"
+    __tablename__ = "orders"
     id: Optional[int] = Field(default = None, primary_key = True, description = "Unique identifier for the order")
     user_id: int = Field(description = "ID of the user who placed the order")
     item_id: int = Field(description = "ID of the item ordered")
