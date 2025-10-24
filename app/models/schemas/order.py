@@ -1,5 +1,6 @@
 from pydantic import BaseModel
-from app.models.order_model import OrderStatusEnum
+from app.models.order_model import OrderStatusEnum, FulfillmentTypeEnum
+
 
 class Order(BaseModel):
     '''
@@ -11,3 +12,4 @@ class Order(BaseModel):
     quantity: int
     total_price: float
     status: OrderStatusEnum = OrderStatusEnum.PENDING
+    fulfillment_type: str

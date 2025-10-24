@@ -10,6 +10,12 @@ class OrderStatusEnum(str, Enum):
     COMPLETED = "completed"
     CANCELED = "canceled"
 
+class FulfillmentTypeEnum(str, Enum):
+    """Enumeration for fulfillment types"""
+    DINE_IN = "dine-in"
+    PICKUP = "pickup"
+    DELIVERY = "delivery"
+
 class OrderModel(SQLModel, table = True):
     """Database model for order"""
     __tablename__ = "orders"
@@ -19,6 +25,7 @@ class OrderModel(SQLModel, table = True):
     quantity: int = Field(gt = 0, description = "Quantity of the item ordered")
     total_price: float = Field(gt = 0, description = "Total price of the order")
     status: OrderStatusEnum = Field(default = OrderStatusEnum.PENDING, description = "Status of the order")
+    fulfillment_type: FulfillmentTypeEnum = Field(description = "Fulfillment type of the order")
    
     created_at: datetime = Field(default_factory = lambda: datetime.now(UTC))
     updated_at: Optional[datetime] = Field(
