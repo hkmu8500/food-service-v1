@@ -1,7 +1,10 @@
 from datetime import datetime, UTC
-from typing import Optional
+from typing import Optional, TYPE_CHECKING
 
-from sqlmodel import SQLModel, Field
+from sqlmodel import SQLModel, Field, Relationship
+
+if TYPE_CHECKING:                                
+    from app.models.cart_model import CartModel
 
 
 class UserModel(SQLModel, table = True):
@@ -15,3 +18,5 @@ class UserModel(SQLModel, table = True):
     updated_at: Optional[datetime] = Field(
         default_factory = lambda: datetime.now(UTC),
         sa_column_kwargs = {"onupdate": lambda: datetime.now(UTC)})
+    
+    cart: Optional["CartModel"] = Relationship(back_populates="user")

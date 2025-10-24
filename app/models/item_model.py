@@ -2,7 +2,8 @@ from datetime import datetime, UTC
 from enum import Enum
 from typing import Optional
 
-from sqlmodel import SQLModel, Field
+from sqlmodel import SQLModel, Field, Relationship
+from app.models.cart_item_model import CartItemModel
 
 
 # Define category enumeration
@@ -28,3 +29,5 @@ class ItemModel(SQLModel, table = True):
     updated_at: Optional[datetime] = Field(
         default_factory = lambda: datetime.now(UTC),
         sa_column_kwargs = {"onupdate": lambda: datetime.now(UTC)})
+
+    cart_items: list["CartItemModel"] = Relationship(back_populates="item")
