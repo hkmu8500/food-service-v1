@@ -52,7 +52,7 @@ def init_user():
 
 def init_order():
     service = get_order_service(get_db_session_sync())
-    service.create_order(OrderModel(user_id = 1, item_id = 1, quantity = 2, total_price = 200))
+    service.create_order(OrderModel(user_id = 1, item_id = 1, quantity = 2, total_price = 200, status = "PENDING", fulfillment_type = "DELIVERY"))
 
 
 def init_cart():
