@@ -8,7 +8,7 @@ from app.core.db_config import get_db_session
 from app.models.schemas.base_response import BaseResponse
 from app.models.schemas.order import Order
 
-router = APIRouter(prefix = "/api")
+router = APIRouter(prefix = "/api/orders", tags = ["Orders"])
 
 
 def get_order_service(session: Session = Depends(get_db_session)) -> OrderService:
@@ -17,7 +17,7 @@ def get_order_service(session: Session = Depends(get_db_session)) -> OrderServic
     return OrderService(repository)
 
 
-@router.get("/orders", response_model = BaseResponse[list[Order]])
+@router.get("/", response_model = BaseResponse[list[Order]])
 def get_orders(service: OrderService = Depends(get_order_service)) -> BaseResponse[list[Order]]:
     """Get all orders"""
     orders = service.get_orders()

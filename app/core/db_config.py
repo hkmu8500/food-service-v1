@@ -44,3 +44,7 @@ def create_tables():
     from app.models.user_model import UserModel
     from app.models.order_model import OrderModel
     SQLModel.metadata.create_all(engine)
+
+def drop_tables():
+    """Drop all database tables"""
+    SQLModel.metadata.drop_all(engine)
