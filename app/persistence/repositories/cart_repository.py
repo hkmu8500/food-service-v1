@@ -27,3 +27,7 @@ class CartRepository:
         self.session.delete(cart)
         self.session.commit()
         return True
+    
+    def get_cart_by_user_id(self, user_id: int) -> Optional[CartModel]:
+        statement = select(CartModel).where(CartModel.user_id == user_id)
+        return self.session.exec(statement).first()

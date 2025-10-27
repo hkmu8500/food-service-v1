@@ -22,8 +22,6 @@ class CartItemRepository:
         self.session.refresh(cart_item)
         return cart_item
     
-    
-    
     def add_item_to_cart(self, cart_item: CartItemModel) -> CartItemModel:
         self.session.add(cart_item)
         self.session.commit()
