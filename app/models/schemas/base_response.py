@@ -21,5 +21,5 @@ class BaseResponse(BaseModel, Generic[T]):
 
     # Example class method for an error response
     @classmethod
-    def create_error(cls, message: str) -> "BaseResponse[None]":
-        return cls(success = False, message = message, data = None)
+    def create_error(cls, message: str, data: Optional[T] = None) -> "BaseResponse[None]":
+        return cls(success = False, message = message, data = data)

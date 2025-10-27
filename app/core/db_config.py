@@ -40,4 +40,11 @@ def get_db_session_sync():
 
 def create_tables():
     """Create all database tables"""
+    from app.models.item_model import ItemModel
+    from app.models.user_model import UserModel
+    from app.models.order_model import OrderModel
     SQLModel.metadata.create_all(engine)
+
+def drop_tables():
+    """Drop all database tables"""
+    SQLModel.metadata.drop_all(engine)
