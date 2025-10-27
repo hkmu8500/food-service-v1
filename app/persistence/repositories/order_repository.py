@@ -29,3 +29,8 @@ class OrderRepository():
         self.session.commit()
         self.session.refresh(order)
         return order
+
+    def get_orders_by_filter(self, user_id: int) -> list[OrderModel]:
+        """Get orders by filter"""
+        orders = self.session.query(OrderModel).filter(OrderModel.user_id == user_id).all()
+        return orders

@@ -13,3 +13,7 @@ class OrderService():
     def get_orders(self) -> list[OrderModel]:
         """Get all orders"""
         return self.repository.get_orders()
+
+    def get_orders_by_filters(self, user_id: int) -> list[OrderModel]:
+        """Get orders by filter"""
+        return self.repository.get_orders_by_filter(user_id)

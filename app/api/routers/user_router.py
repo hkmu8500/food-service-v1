@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Request
 from sqlmodel import Session
 
 from app.core.db_config import get_db_session
@@ -25,7 +25,9 @@ def signup(user_name: str, service: UserService = Depends(get_user_service)) -> 
 
 
 @router.post("/auth/login", response_model = BaseResponse[User])
-def login(user_name: str, service: UserService = Depends(get_user_service)) -> BaseResponse[User]:
+def login(request: Request, user_name: str, service: UserService = Depends(get_user_service)) -> BaseResponse[User]:
     user_model = service.login(user_name)
     user = user_model_to_user(user_model)
+    # Store login info in session
+    request.session["user"] = {"id": user.id, "name": user.name}
     return BaseResponse.create_success(data = user)

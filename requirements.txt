@@ -7,3 +7,5 @@ pytest
 requests
 sqlalchemy-libsql
 python-dotenv
+starlette
+itsdangerous

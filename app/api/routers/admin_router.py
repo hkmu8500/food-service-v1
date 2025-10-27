@@ -15,5 +15,6 @@ def table_refresh_all() -> BaseResponse[None]:
     return BaseResponse.create_success(message = "Tables refreshed successfully", data = None)
     
     
+#define a method to querh all the orders for admin
 
 
