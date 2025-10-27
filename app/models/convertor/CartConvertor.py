@@ -1,12 +1,15 @@
 from typing import List
+
 from app.models.cart_model import CartModel
+from app.models.cart_item_model import CartItemModel
 from app.models.schemas.cart import Cart
+from app.models.schemas.cart_item import Cart_Item
+
 from app.models.convertor.UserConvertor import user_model_to_user
 from app.models.convertor.UserConvertor import user_to_user_model
 from app.models.convertor.CartItemConvertor import cart_item_model_to_cart_item
 from app.models.convertor.CartItemConvertor import cart_item_to_cart_item_model
-from app.models.schemas.cart_item import Cart_Item
-from app.models.cart_item_model import CartItemModel
+
 
 
 def cart_model_to_cart(db_cart: CartModel) -> Cart:

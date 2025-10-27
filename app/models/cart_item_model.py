@@ -25,9 +25,7 @@ class CartItemModel(SQLModel, table=True):
         foreign_key="item.id",
         index=True
     )
-    quantity: int = Field(
-        default=1
-    )
+    quantity: int = Field(default=0)
     created_at: datetime = Field(
         default_factory=lambda: datetime.now(UTC),
     )

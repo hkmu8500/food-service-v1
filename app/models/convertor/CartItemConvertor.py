@@ -1,6 +1,5 @@
 from app.models.cart_item_model import CartItemModel
 from app.models.schemas.cart_item import Cart_Item
-from app.models.schemas.Item import Item
 from app.models.convertor.ItemConvertor import item_model_to_item, item_to_item_model
 
 

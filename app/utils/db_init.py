@@ -1,15 +1,14 @@
 from app.api.routers.item_router import get_item_service
-from app.api.routers.order_router import get_order_service
-from app.api.routers.user_router import get_user_service
-from app.core.db_config import get_db_session_sync
-from app.models.item_model import ItemModel, CategoryEnum
-from app.models.order_model import OrderModel
-from app.api.routers.order_router import get_order_service        
-from app.models.cart_model import CartModel          
-from app.models.cart_item_model import CartItemModel 
+from app.api.routers.user_router import get_user_service        
 from app.api.routers.cart_router import get_cart_service
 from app.api.routers.cart_item_router import get_cart_item_service
+
+from app.core.db_config import get_db_session_sync
 from sqlmodel import select
+
+from app.models.item_model import ItemModel, CategoryEnum
+from app.models.cart_model import CartModel  
+
 
 
 def init_db():
@@ -17,7 +16,7 @@ def init_db():
 
     init_user()
     init_item()
-    init_order()
+    # init_order()
     init_cart()
     init_cart_item()
 
@@ -50,9 +49,9 @@ def init_user():
     service.signup(name = "admin")
 
 
-def init_order():
-    service = get_order_service(get_db_session_sync())
-    service.create_order(OrderModel(user_id = 1, item_id = 1, quantity = 2, total_price = 200))
+# def init_order():
+#     service = get_order_service(get_db_session_sync())
+#     service.create_order(OrderModel(user_id = 1, item_id = 1, quantity = 2, total_price = 200))
 
 
 def init_cart():
@@ -63,7 +62,7 @@ def init_cart():
 
 def init_cart_item():
     service = get_cart_item_service(get_db_session_sync())
-    service.add_item(cart_id=1, item_id=1, quantity=2)
-    service.add_item(cart_id=1, item_id=2, quantity=1)
-    service.add_item(cart_id=2, item_id=1, quantity=3)
+    service.add_item(cart_id=1, item_id=1)
+    service.add_item(cart_id=1, item_id=2)
+    service.add_item(cart_id=2, item_id=1)
 

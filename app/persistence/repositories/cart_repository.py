@@ -1,5 +1,6 @@
-from typing import Optional, List
 from sqlmodel import Session, select
+from typing import Optional, List
+
 from app.models.cart_model import CartModel
 
 

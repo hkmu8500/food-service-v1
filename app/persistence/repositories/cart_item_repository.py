@@ -1,5 +1,6 @@
-from typing import Optional, List
 from sqlmodel import Session, select
+from typing import Optional, List
+
 from app.models.cart_item_model import CartItemModel
 
 
@@ -9,6 +10,20 @@ class CartItemRepository:
     def __init__(self, session: Session):
         self.session = session
 
+    def create(self, cart_item: CartItemModel):
+        self.session.add(cart_item)
+        self.session.commit()
+        self.session.refresh(cart_item)
+        return cart_item
+
+    def update(self, cart_item: CartItemModel):
+        self.session.add(cart_item)
+        self.session.commit()
+        self.session.refresh(cart_item)
+        return cart_item
+    
+    
+    
     def add_item_to_cart(self, cart_item: CartItemModel) -> CartItemModel:
         self.session.add(cart_item)
         self.session.commit()
@@ -30,18 +45,3 @@ class CartItemRepository:
             & (CartItemModel.item_id == item_id)
         )
         return self.session.exec(statement).first()
-
-    def update_quantity(self, cart_item: CartItemModel, new_quantity: int) -> CartItemModel:
-        cart_item.quantity = new_quantity
-        self.session.add(cart_item)
-        self.session.commit()
-        self.session.refresh(cart_item)
-        return cart_item
-
-    def delete_item(self, cart_item_id: int) -> bool:
-        item = self.session.get(CartItemModel, cart_item_id)
-        if not item:
-            return False
-        self.session.delete(item)
-        self.session.commit()
-        return True

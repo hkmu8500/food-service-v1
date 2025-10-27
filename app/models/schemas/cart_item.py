@@ -1,5 +1,6 @@
 from pydantic import BaseModel
-from app.models.schemas.Item import Item  # Make sure the Item model exists
+
+from app.models.schemas.Item import Item 
 
 class Cart_Item(BaseModel):
     """
