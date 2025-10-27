@@ -2,7 +2,9 @@ from sqlalchemy.pool.impl import StaticPool
 from sqlmodel import create_engine, SQLModel, Session
 from dotenv import load_dotenv
 from sqlalchemy import text
-import os
+import os,logging
+
+logger = logging.getLogger(__name__)
 
 load_dotenv()
 
@@ -44,7 +46,9 @@ def create_tables():
     from app.models.user_model import UserModel
     from app.models.order_model import OrderModel
     SQLModel.metadata.create_all(engine)
+    logger.info("Database tables created")
 
 def drop_tables():
     """Drop all database tables"""
     SQLModel.metadata.drop_all(engine)
+    logger.info("Database tables dropped")

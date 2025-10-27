@@ -10,6 +10,10 @@ from app.models.cart_item_model import CartItemModel
 from app.api.routers.cart_router import get_cart_service
 from app.api.routers.cart_item_router import get_cart_item_service
 from sqlmodel import select
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 
 def init_db():
@@ -28,6 +32,8 @@ def init_db():
     print("Carts in DB after init:", carts)
     items = session.exec(select(ItemModel)).all()
     print("Items in DB after init:", items)
+    
+    logger.info("Init DB done")
 
 
 def init_item():
