@@ -43,3 +43,8 @@ class CartItemRepository:
             & (CartItemModel.item_id == item_id)
         )
         return self.session.exec(statement).first()
+    
+    def delete_item(self, cart_item: CartItemModel) -> None:
+        self.session.delete(cart_item)
+        self.session.commit()
+
