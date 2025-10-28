@@ -9,6 +9,7 @@ Clone and install the required dependencies:
 pip install -r requirements.txt
 ```
 
+
 ## Running Locally
 
 Start the development server on http://0.0.0.0:5001
