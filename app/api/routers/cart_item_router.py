@@ -53,3 +53,18 @@ def add_item_to_cart(
     
     except HTTPException as e:
         raise e
+    
+@router.delete("/cart_item/{cart_id}/{item_id}", response_model=BaseResponse[CartItemResponse])
+def delete_item_from_cart(
+    cart_id: int,
+    item_id: int,
+    service: CartItemService = Depends(get_cart_item_service),
+) -> BaseResponse[CartItemResponse]:
+    """Delete an item from the cart and return the deleted item info."""
+    try:
+        deleted_item = service.remove_item(cart_id, item_id)
+        return BaseResponse.create_success(data=deleted_item)
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
