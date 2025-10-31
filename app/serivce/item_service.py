@@ -23,3 +23,6 @@ class ItemService:
     def get_items_by_filters(self, category: CategoryEnum | None,
                              available: bool | None) -> list[ItemModel]:
         return self.repository.get_items_by_filters(category, available)
+
+    def get_item(self, item_id: int) -> ItemModel | None:
+        return self.repository.get_item(item_id)
