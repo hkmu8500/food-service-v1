@@ -6,6 +6,7 @@ from app.models.convertor.UserConvertor import user_model_to_user
 from app.models.schemas.base_response import BaseResponse
 from app.models.schemas.user import User
 from app.persistence.repositories.user_repository import UserRepository
+from app.persistence.repositories.cart_repository import CartRepository
 from app.serivce.user_service import UserService
 
 router = APIRouter(prefix = "/api")
@@ -13,8 +14,9 @@ router = APIRouter(prefix = "/api")
 
 def get_user_service(session: Session = Depends(get_db_session)) -> UserService:
     """Dependency that provides UserService instance"""
-    repository = UserRepository(session)
-    return UserService(repository)
+    user_repository = UserRepository(session)
+    cart_repository = CartRepository(session) 
+    return UserService(user_repository, cart_repository)
 
 
 @router.post("/auth/signup", response_model = BaseResponse[User])

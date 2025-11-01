@@ -17,8 +17,8 @@ def init_db():
     init_user()
     init_item()
     # init_order()
-    init_cart()
-    init_cart_item()
+    # init_cart()
+    # init_cart_item()
 
     session = get_db_session_sync()
 
@@ -57,15 +57,15 @@ def init_order():
     
     service.create_order(order)
 
-def init_cart():
-    service = get_cart_service(get_db_session_sync())
-    service.create_cart(user_id=1)
-    service.create_cart(user_id=2)
+# def init_cart():
+#     service = get_cart_service(get_db_session_sync())
+#     service.create_cart(user_id=1)
+#     service.create_cart(user_id=2)
 
 
-def init_cart_item():
-    service = get_cart_item_service(get_db_session_sync())
-    service.add_item(cart_id=1, item_id=1)
-    service.add_item(cart_id=1, item_id=2)
-    service.add_item(cart_id=2, item_id=1)
+# def init_cart_item():
+#     service = get_cart_item_service(get_db_session_sync())
+#     service.add_item(cart_id=1, item_id=1)
+#     service.add_item(cart_id=1, item_id=2)
+#     service.add_item(cart_id=2, item_id=1)
 
