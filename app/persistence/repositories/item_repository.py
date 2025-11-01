@@ -36,3 +36,9 @@ class ItemRepository:
         statement = select(ItemModel).where(ItemModel.name == name)
         return self.session.exec(statement).first()
 
+    def get_item(self, item_id: int) -> ItemModel | None:
+        # Get item by primary key
+        if item_id is None:
+            return None
+        return self.session.get(ItemModel, item_id)
+

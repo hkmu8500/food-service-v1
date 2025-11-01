@@ -1,6 +1,6 @@
 from datetime import datetime, UTC
-from typing import Optional
-from sqlmodel import SQLModel, Field
+from typing import Optional, TYPE_CHECKING
+from sqlmodel import SQLModel, Field, Relationship
 from enum import Enum
 
 
@@ -21,8 +21,7 @@ class OrderModel(SQLModel, table = True):
     __tablename__ = "orders"
     id: Optional[int] = Field(default = None, primary_key = True, description = "Unique identifier for the order")
     user_id: int = Field(description = "ID of the user who placed the order")
-    item_id: int = Field(description = "ID of the item ordered")
-    quantity: int = Field(gt = 0, description = "Quantity of the item ordered")
+    user_name: str = Field(description = "Name of the user who placed the order")
     total_price: float = Field(gt = 0, description = "Total price of the order")
     status: OrderStatusEnum = Field(default = OrderStatusEnum.PENDING, description = "Status of the order")
     fulfillment_type: FulfillmentTypeEnum = Field(description = "Fulfillment type of the order")
@@ -31,3 +30,10 @@ class OrderModel(SQLModel, table = True):
     updated_at: Optional[datetime] = Field(
         default_factory = lambda: datetime.now(UTC),
         sa_column_kwargs = {"onupdate": lambda: datetime.now(UTC)})
+
+    # Relationship to order items with cascade for inserts/deletes
+    items: list["OrderItemModel"] = Relationship(
+        back_populates = "order",
+        sa_relationship_kwargs = {"cascade": "all, delete-orphan", "lazy": "selectin"}
+    )
+    

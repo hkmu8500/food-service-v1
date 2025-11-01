@@ -1,29 +1,35 @@
-from app.models.order_model import OrderModel, FulfillmentTypeEnum
+from typing import List
+from app.models.order_model import OrderModel
+from app.models.order_item import OrderItemModel
 from app.models.schemas.order import Order
-from app.models.enums.order_status import OrderStatusEnum
+from app.models.schemas.order_item import OrderItem
 
 
 def order_model_to_order(db_order: OrderModel) -> Order:
-    """Convert SQLModel OrderModel to Pydantic Order"""
-    return Order(
-        id = db_order.id,
-        user_id = db_order.user_id,
-        item_id = db_order.item_id,
-        quantity = db_order.quantity,
-        total_price = db_order.total_price,
-        status = db_order.status,
-        fulfillment_type = db_order.fulfillment_type.name,
-    )
+    """Convert SQLModel OrderModel (with items) to Pydantic Order"""
+    items: List[OrderItem] = []
+    print("the length of items", len(db_order.items))
+    if db_order.items:
+        for oi in db_order.items:
+            # oi: OrderItemModel
+            items.append(
+                OrderItem(
+                    id=oi.id,
+                    quantity=oi.quantity,
+                    menuId=oi.item_id,
+                    price=str(oi.price),  # Convert float to string as per schema
+                    name=oi.item.name if oi.item else "Unknown Item",  # Get name from related item
+                )
+            )
 
-def order_to_order_model(order: Order) -> OrderModel:
-    """Convert Pydantic Order to SQLModel OrderModel"""
-    return OrderModel(
-        id = order.id,
-        user_id = order.user_id,
-        item_id = order.item_id,
-        quantity = order.quantity,
-        total_price = order.total_price,
-        status = order.status,
-        fulfillment_type = FulfillmentTypeEnum(order.fulfillment_type)
-        # created_at and updated_at will be auto-generated
+    return Order(
+        userId=db_order.user_id,
+        userName=db_order.user_name,
+        totalPrice=db_order.total_price,
+        status=db_order.status,
+        fulfillmentType=db_order.fulfillment_type.value,
+        items=items,
+        id=db_order.id,
+        createdAt=db_order.created_at.isoformat() if db_order.created_at else None,
+        updatedAt=db_order.updated_at.isoformat() if db_order.updated_at else None,
     )
