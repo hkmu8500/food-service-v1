@@ -12,6 +12,11 @@ from app.models.schemas.Item import Item
 from app.persistence.repositories.item_repository import ItemRepository
 from app.serivce.item_service import ItemService
 from app.models.convertor.OrderConvertor import order_model_to_order
+from app.models.schemas.user import User
+from app.persistence.repositories.user_repository import UserRepository
+from app.serivce.user_service import UserService
+
+
 
 router = APIRouter(prefix = "/api/orders", tags = ["Orders"])
 
@@ -25,22 +30,34 @@ def get_order_service(session: Session = Depends(get_db_session)) -> OrderServic
     repository = OrderRepository(session)
     return OrderService(repository)
 
+def get_user_service(session: Session = Depends(get_db_session)) -> UserService:
+    """Dependency that provides UserService instance"""
+    repository = UserRepository(session)
+    return UserService(repository)
 
-@router.get("/{userId}", response_model = BaseResponse[list[OrderModel]])
+
+
+@router.get("/{userId}", response_model = BaseResponse[list[Order]])
 def get_orders(userId: int, service: OrderService = Depends(get_order_service)) -> BaseResponse[list[OrderModel]]:
     """Get all orders for a user"""
     order_models = service.get_orders()
     orders = [order_model_to_order(o) for o in order_models if o.user_id == userId]
     return BaseResponse.create_success(data = orders)
 
+
 @router.post("/{userId}", response_model = BaseResponse[Order])
 def create_order(
     userId: int,
     payload: OrderCreate,
-    service: OrderService = Depends(get_order_service),
+    user_service: UserService = Depends(get_user_service),
+    order_service: OrderService = Depends(get_order_service),
     item_service: ItemService = Depends(get_item_service),
 ) -> BaseResponse[Order]:
     """Create a new order with selected items for a user"""
-    created = service.create_order(user_id=userId, items=payload.items, fulfillment_type=payload.fulfillment_type, item_service=item_service)
+    user = user_service.get_user(userId)
+    if not user:
+        return BaseResponse.create_error(message = "User not found")
+
+    created = order_service.create_order(user_id=userId, user_name=user.name, items=payload.items, fulfillment_type=payload.fulfillmentType, item_service=item_service)
     return BaseResponse.create_success(data = order_model_to_order(created))
 

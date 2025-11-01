@@ -21,6 +21,7 @@ class OrderModel(SQLModel, table = True):
     __tablename__ = "orders"
     id: Optional[int] = Field(default = None, primary_key = True, description = "Unique identifier for the order")
     user_id: int = Field(description = "ID of the user who placed the order")
+    user_name: str = Field(description = "Name of the user who placed the order")
     total_price: float = Field(gt = 0, description = "Total price of the order")
     status: OrderStatusEnum = Field(default = OrderStatusEnum.PENDING, description = "Status of the order")
     fulfillment_type: FulfillmentTypeEnum = Field(description = "Fulfillment type of the order")

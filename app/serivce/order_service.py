@@ -11,21 +11,22 @@ class OrderService:
     def __init__(self, repository: OrderRepository):
         self.repository = repository
 
-    def create_order(self, user_id: int, items: List[OrderCreateItem], fulfillment_type: str, item_service: ItemService) -> OrderModel:
+    def create_order(self, user_id: int, user_name: str, items: List[OrderCreateItem], fulfillment_type: FulfillmentTypeEnum, item_service: ItemService) -> OrderModel:
         """Create a new order with selected items and userId"""
         order = OrderModel(
             user_id=user_id,
+            user_name=user_name,    
             total_price=0.0,
             status=OrderStatusEnum.PENDING,
-            fulfillment_type=FulfillmentTypeEnum(fulfillment_type),
+            fulfillment_type=fulfillment_type.value,
         )
 
         order_items: List[OrderItemModel] = []
         total = 0.0
         for payload in items:
-            item = item_service.get_item(payload.item_id)
+            item = item_service.get_item(payload.menuId)
             if item is None:
-                raise ValueError(f"Item {payload.item_id} not found")
+                raise ValueError(f"Item {payload.menuId} not found")
             if not item.available:
                 raise ValueError(f"Item {item.name} is not available")
 
@@ -49,3 +50,12 @@ class OrderService:
     def get_orders(self) -> list[OrderModel]:
         """Get all orders"""
         return self.repository.get_orders()
+
+    def update_order_status(self, order_id: str, status: str) -> None:
+        """Update order status"""
+        # load the entity from the database, and modify the status
+        order = self.repository.get_order(order_id)
+        if order is None:
+            raise ValueError(f"Order {order_id} not found")
+        order.status = OrderStatusEnum(status)
+        self.repository.update_order(order)

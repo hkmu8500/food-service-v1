@@ -8,5 +8,7 @@ class OrderItem(BaseModel):
     """
     id: int
     quantity: int
-    item: Item
-    price: float
+    # ID of the item in the menu
+    menuId: int
+    price: str
+    name: str
