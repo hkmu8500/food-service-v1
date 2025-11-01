@@ -16,6 +16,7 @@ from app.models.schemas.user import User
 from app.persistence.repositories.user_repository import UserRepository
 from app.serivce.user_service import UserService
 from app.models.order_model import FulfillmentTypeEnum
+from app.persistence.repositories.cart_repository import CartRepository
 
 
 
@@ -33,8 +34,9 @@ def get_order_service(session: Session = Depends(get_db_session)) -> OrderServic
 
 def get_user_service(session: Session = Depends(get_db_session)) -> UserService:
     """Dependency that provides UserService instance"""
-    repository = UserRepository(session)
-    return UserService(repository)
+    user_repository = UserRepository(session)
+    cart_repository = CartRepository(session)
+    return UserService(user_repository, cart_repository)
 
 
 

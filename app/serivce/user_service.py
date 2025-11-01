@@ -32,7 +32,7 @@ class UserService:
 
     def get_user(self, user_id: int) -> UserModel | None:
         """Get user profile by ID"""
-        db_user = self.repository.get_user(user_id)
+        db_user = self.user_repository.get_user(user_id)
         return db_user
 
     
