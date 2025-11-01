@@ -1,11 +1,11 @@
 from pydantic import BaseModel
+from app.models.order_model import FulfillmentTypeEnum
 
 
 class OrderCreateItem(BaseModel):
-    item_id: int
+    menuId: int
     quantity: int
 
 
 class OrderCreate(BaseModel):
-    fulfillment_type: str
     items: list[OrderCreateItem]

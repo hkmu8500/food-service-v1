@@ -23,6 +23,10 @@ class UserRepository:
         statement = select(UserModel).where(UserModel.name == name)
         return self.session.exec(statement).first()
 
+    def get_user(self, user_id: int) -> UserModel | None:
+        # Get user by ID
+        return self.session.get(UserModel, user_id)
+
     def update_user(self, user_id: int, user_data: UserModel) -> UserModel | None:
         # Update user information
         db_user: UserModel | None = self.session.get(UserModel, user_id)

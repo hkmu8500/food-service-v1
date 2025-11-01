@@ -8,11 +8,15 @@ class Order(BaseModel):
     A Pydantic model representing an order placed by a user.
     This model validates the structure of order data, ensuring it has a user ID, item ID, quantity, and total price.
     '''
-    user_id: int
-    total_price: float
+    userId: int
+    userName: str
+    totalPrice: float
     status: OrderStatusEnum = OrderStatusEnum.PENDING
-    fulfillment_type: str
+    fulfillmentType: FulfillmentTypeEnum
     items: list[OrderItem] = []
+    id: int | None = None
+    createdAt: str | None = None
+    updatedAt: str | None = None
 
 # Ensure forward references (if any) are resolved in Pydantic v2
 try:
