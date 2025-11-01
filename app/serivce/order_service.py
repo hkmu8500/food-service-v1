@@ -51,11 +51,11 @@ class OrderService:
         """Get all orders"""
         return self.repository.get_orders()
 
-    def update_order_status(self, order_id: str, status: str) -> None:
+    def update_order_status(self, order_id: int, status: OrderStatusEnum) -> None:
         """Update order status"""
         # load the entity from the database, and modify the status
         order = self.repository.get_order(order_id)
         if order is None:
             raise ValueError(f"Order {order_id} not found")
-        order.status = OrderStatusEnum(status)
+        order.status = status
         self.repository.update_order(order)

@@ -8,5 +8,4 @@ class OrderCreateItem(BaseModel):
 
 
 class OrderCreate(BaseModel):
-    fulfillmentType: FulfillmentTypeEnum
     items: list[OrderCreateItem]

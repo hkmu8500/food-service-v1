@@ -15,6 +15,7 @@ from app.models.convertor.OrderConvertor import order_model_to_order
 from app.models.schemas.user import User
 from app.persistence.repositories.user_repository import UserRepository
 from app.serivce.user_service import UserService
+from app.models.order_model import FulfillmentTypeEnum
 
 
 
@@ -48,6 +49,7 @@ def get_orders(userId: int, service: OrderService = Depends(get_order_service)) 
 @router.post("/{userId}", response_model = BaseResponse[Order])
 def create_order(
     userId: int,
+    fulfillmentType: FulfillmentTypeEnum,
     payload: OrderCreate,
     user_service: UserService = Depends(get_user_service),
     order_service: OrderService = Depends(get_order_service),
@@ -58,6 +60,6 @@ def create_order(
     if not user:
         return BaseResponse.create_error(message = "User not found")
 
-    created = order_service.create_order(user_id=userId, user_name=user.name, items=payload.items, fulfillment_type=payload.fulfillmentType, item_service=item_service)
+    created = order_service.create_order(user_id=userId, user_name=user.name, items=payload.items, fulfillment_type=fulfillmentType, item_service=item_service)
     return BaseResponse.create_success(data = order_model_to_order(created))
 
