@@ -37,7 +37,13 @@ class CartItemService:
             new_item = CartItemModel(cart_id=cart_id, item_id=item_id, quantity=1)
             created_item = self.cart_item_repository.create(new_item)
             return self.map_cart_item(created_item)  
-    
+        
+    def subtract_item(self, cart_id: int, item_id: int) -> CartItemResponse:
+        existing_item = self.cart_item_repository.get_item_by_cart_and_item_id(cart_id, item_id)
+        if existing_item:
+            existing_item.quantity -= 1
+            updated_item = self.cart_item_repository.update(existing_item)
+            return self.map_cart_item(updated_item)   
     
     def add_item_by_user_id(self, user_id: int, item_id: int) -> CartItemResponse:
         cart = self.cart_repository.get_cart_by_user_id(user_id)   
@@ -45,6 +51,13 @@ class CartItemService:
         if not cart:
             cart = self.cart_repository.create_cart(user_id)
         return self.add_item(cart.id, item_id)
+    
+    def subtract_item_by_user_id(self, user_id: int, item_id: int) -> CartItemResponse:
+        cart = self.cart_repository.get_cart_by_user_id(user_id)   
+        
+        if not cart:
+            cart = self.cart_repository.create_cart(user_id)
+        return self.subtract_item(cart.id, item_id)
     
     def remove_item(self, cart_id: int, item_id: int) -> CartItemResponse:
         cart_item = self.cart_item_repository.get_item_by_cart_and_item_id(cart_id, item_id)

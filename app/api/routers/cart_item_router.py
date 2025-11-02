@@ -36,6 +36,24 @@ def add_item_to_cart(
     except HTTPException as e:
         raise e
     
+# Subtracts a cart item to the cart by 1 (Using user id)
+@router.post("/cart_item_by_user_id_subtract/{user_id}/{item_id}", response_model=BaseResponse[CartItemResponse])
+def minus_item_from_cart(
+    user_id: int,
+    item_id: int,
+
+    service: CartItemService = Depends(get_cart_item_service),
+) -> BaseResponse[CartItemResponse]:
+    print('Entered_01')
+    """minus an item from a user's cart"""
+    try:
+        cart_item = service.subtract_item_by_user_id(user_id, item_id)
+        print('Entered Try area')
+        return BaseResponse.create_success(data=cart_item)
+    
+    except HTTPException as e:
+        raise e
+    
 # Adds a cart item to the cart by 1 (Using cart id)
 @router.post("/cart_item/{cart_id}/{item_id}", response_model=BaseResponse[CartItemResponse])
 def add_item_to_cart(
