@@ -97,5 +97,5 @@ def create_order_from_cart(
     if not user:
         return BaseResponse.create_error(message = "User not found")
 
-    created = order_service.create_order_from_cart(user_id=userId, user_name=user.name, item_ids_from_cart=payload.itemIds, fulfillment_type=fulfillmentType, item_service=item_service, cart_item_service=cart_item_service, cart_service=cart_service)
+    created = order_service.create_order_from_cart(user_id=userId, user_name=user.name, menu_ids_from_cart=payload.menuIds, fulfillment_type=fulfillmentType, item_service=item_service, cart_item_service=cart_item_service, cart_service=cart_service)
     return BaseResponse.create_success(data = order_model_to_order(created))

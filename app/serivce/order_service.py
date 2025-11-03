@@ -63,7 +63,7 @@ class OrderService:
             try:
                 removed_item = cart_item_service.remove_item(cart_id=cart.id, item_id=menu_id)
             except AttributeError as e:
-                raise ValueError(f"Item {menu_id} not found in cart") from e
+                raise ValueError(f"Item {menu_id} (menu_id) not found in cart") from e
             
             items.append(
                 OrderCreateItem(
