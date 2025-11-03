@@ -9,3 +9,7 @@ class OrderCreateItem(BaseModel):
 
 class OrderCreate(BaseModel):
     items: list[OrderCreateItem]
+
+
+class OrderCreateCartItems(BaseModel):
+    itemIds: list[int]
