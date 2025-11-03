@@ -49,7 +49,7 @@ class OrderService:
         return self.repository.create_order(order)
 
     # create_order_from_cart
-    def create_order_from_cart(self, user_id: int, user_name: str, item_ids_from_cart: List[int], fulfillment_type: FulfillmentTypeEnum, item_service: ItemService, cart_item_service: CartItemService, cart_service: CartService) -> OrderModel:
+    def create_order_from_cart(self, user_id: int, user_name: str, menu_ids_from_cart: List[int], fulfillment_type: FulfillmentTypeEnum, item_service: ItemService, cart_item_service: CartItemService, cart_service: CartService) -> OrderModel:
         """Create a new order with selected items in cart and userId"""
 
         cart = cart_service.get_user_cart(user_id)
@@ -59,11 +59,11 @@ class OrderService:
         
         items: List[OrderCreateItem] = []
         # remove the cart items from the cart
-        for item_id in item_ids_from_cart:
+        for menu_id in menu_ids_from_cart:
             try:
-                removed_item = cart_item_service.remove_item(cart_id=cart.id, item_id=item_id)
+                removed_item = cart_item_service.remove_item(cart_id=cart.id, item_id=menu_id)
             except AttributeError as e:
-                raise ValueError(f"Item {item_id} not found in cart") from e
+                raise ValueError(f"Item {menu_id} not found in cart") from e
             
             items.append(
                 OrderCreateItem(

@@ -12,4 +12,4 @@ class OrderCreate(BaseModel):
 
 
 class OrderCreateCartItems(BaseModel):
-    itemIds: list[int]
+    menuIds: list[int]
