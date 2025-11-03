@@ -17,8 +17,10 @@ from app.persistence.repositories.user_repository import UserRepository
 from app.serivce.user_service import UserService
 from app.models.order_model import FulfillmentTypeEnum
 from app.persistence.repositories.cart_repository import CartRepository
-
-
+from app.serivce.cart_item_service import CartItemService
+from app.persistence.repositories.cart_item_repository import CartItemRepository
+from app.serivce.cart_service import CartService
+from app.models.schemas.order_create import OrderCreateCartItems
 
 router = APIRouter(prefix = "/api/orders", tags = ["Orders"])
 
@@ -38,8 +40,20 @@ def get_user_service(session: Session = Depends(get_db_session)) -> UserService:
     cart_repository = CartRepository(session)
     return UserService(user_repository, cart_repository)
 
+# CartItemService
+def get_cart_item_service(session: Session = Depends(get_db_session)) -> CartItemService:
+    """Dependency that provides CartItemService instance"""
+    cart_repository = CartRepository(session)
+    cart_item_repository = CartItemRepository(session)
+    return CartItemService(cart_repository, cart_item_repository)    
 
+# get CartService
+def get_cart_service(session: Session = Depends(get_db_session)) -> CartService:
+    """Dependency that provides CartService instance"""
+    cart_repository = CartRepository(session)
+    return CartService(cart_repository)
 
+# get all orders for a user
 @router.get("/{userId}", response_model = BaseResponse[list[Order]])
 def get_orders(userId: int, service: OrderService = Depends(get_order_service)) -> BaseResponse[list[OrderModel]]:
     """Get all orders for a user"""
@@ -49,15 +63,15 @@ def get_orders(userId: int, service: OrderService = Depends(get_order_service)) 
 
 
 @router.post("/{userId}", response_model = BaseResponse[Order])
-def create_order(
+def create_order_immediately(
     userId: int,
     fulfillmentType: FulfillmentTypeEnum,
     payload: OrderCreate,
     user_service: UserService = Depends(get_user_service),
     order_service: OrderService = Depends(get_order_service),
-    item_service: ItemService = Depends(get_item_service),
+    item_service: ItemService = Depends(get_item_service)
 ) -> BaseResponse[Order]:
-    """Create a new order with selected items for a user"""
+    """Create a new order with selected items immediately for a user"""
     user = user_service.get_user(userId)
     if not user:
         return BaseResponse.create_error(message = "User not found")
@@ -65,3 +79,23 @@ def create_order(
     created = order_service.create_order(user_id=userId, user_name=user.name, items=payload.items, fulfillment_type=fulfillmentType, item_service=item_service)
     return BaseResponse.create_success(data = order_model_to_order(created))
 
+
+# create an new order from selected items in cart
+@router.post("/from_cart/{userId}", response_model = BaseResponse[Order])
+def create_order_from_cart(
+    userId: int,
+    fulfillmentType: FulfillmentTypeEnum,
+    payload: OrderCreateCartItems,
+    user_service: UserService = Depends(get_user_service),
+    order_service: OrderService = Depends(get_order_service),
+    item_service: ItemService = Depends(get_item_service),
+    cart_item_service: CartItemService = Depends(get_cart_item_service),
+    cart_service: CartService = Depends(get_cart_service)
+) -> BaseResponse[Order]:
+    """Create a new order with selected items in cart for a user"""
+    user = user_service.get_user(userId)
+    if not user:
+        return BaseResponse.create_error(message = "User not found")
+
+    created = order_service.create_order_from_cart(user_id=userId, user_name=user.name, item_ids_from_cart=payload.itemIds, fulfillment_type=fulfillmentType, item_service=item_service, cart_item_service=cart_item_service, cart_service=cart_service)
+    return BaseResponse.create_success(data = order_model_to_order(created))

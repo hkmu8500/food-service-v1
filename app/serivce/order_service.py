@@ -4,7 +4,8 @@ from app.models.order_item import OrderItemModel
 from app.persistence.repositories.order_repository import OrderRepository
 from app.serivce.item_service import ItemService
 from app.models.schemas.order_create import OrderCreateItem
-
+from app.serivce.cart_item_service import CartItemService
+from app.serivce.cart_service import CartService
 
 class OrderService:
     """Service for OrderModel"""
@@ -46,6 +47,33 @@ class OrderService:
         order.items = order_items
 
         return self.repository.create_order(order)
+
+    # create_order_from_cart
+    def create_order_from_cart(self, user_id: int, user_name: str, item_ids_from_cart: List[int], fulfillment_type: FulfillmentTypeEnum, item_service: ItemService, cart_item_service: CartItemService, cart_service: CartService) -> OrderModel:
+        """Create a new order with selected items in cart and userId"""
+
+        cart = cart_service.get_user_cart(user_id)
+        if cart is None:
+            cart_service.create_cart(user_id)
+            cart = cart_service.get_cart(user_id)
+        
+        items: List[OrderCreateItem] = []
+        # remove the cart items from the cart
+        for item_id in item_ids_from_cart:
+            try:
+                removed_item = cart_item_service.remove_item(cart_id=cart.id, item_id=item_id)
+            except AttributeError as e:
+                raise ValueError(f"Item {item_id} not found in cart") from e
+            
+            items.append(
+                OrderCreateItem(
+                    menuId=removed_item.items.id,
+                    quantity=removed_item.quantity,
+                )
+            )
+
+        # create the order with the cart items
+        return self.create_order(user_id, user_name, items, fulfillment_type, item_service)
 
     def get_orders(self) -> list[OrderModel]:
         """Get all orders"""
