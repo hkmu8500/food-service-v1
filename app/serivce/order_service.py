@@ -67,7 +67,7 @@ class OrderService:
             
             items.append(
                 OrderCreateItem(
-                    menuId=removed_item.id,
+                    menuId=removed_item.items.item_id,
                     quantity=removed_item.quantity,
                 )
             )
