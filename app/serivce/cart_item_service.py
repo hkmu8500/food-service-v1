@@ -65,6 +65,17 @@ class CartItemService:
         deleted_item = self.map_cart_item(cart_item)  # Capture before delete
         self.cart_item_repository.delete_item(cart_item)
         return deleted_item
+    
+    def update_item_quantity(self, cart_id: int, item_id: int, quantity: int) -> CartItemResponse:
+        existing_item = self.cart_item_repository.get_item_by_cart_and_item_id(cart_id, item_id)
+
+        if not existing_item:
+           new_item = CartItemModel(cart_id=cart_id, item_id=item_id, quantity=quantity)
+           created_item = self.cart_item_repository.create(new_item)
+           return self.map_cart_item(created_item)
+
+        updated_item = self.cart_item_repository.update_item_quantity(cart_id, item_id, quantity)
+        return self.map_cart_item(updated_item)
 
 
     # def add_item(self, cart_id: int, item_id: int) -> CartItemModel:
