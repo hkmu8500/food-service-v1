@@ -48,3 +48,13 @@ class CartItemRepository:
         self.session.delete(cart_item)
         self.session.commit()
 
+    def update_item_quantity(self, cart_id: int, item_id: int, quantity: int):
+        cart_item = self.get_item_by_cart_and_item_id(cart_id, item_id)
+        if not cart_item:
+          return None  
+    
+        cart_item.quantity = quantity
+        self.session.add(cart_item)
+        self.session.commit()
+        self.session.refresh(cart_item)
+        return cart_item

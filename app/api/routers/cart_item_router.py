@@ -86,3 +86,19 @@ def delete_item_from_cart(
         raise e
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/cart_item_update/{cart_id}/{item_id}/{quantity}", response_model=BaseResponse[CartItemResponse])
+def update_cart_item_quantity(
+    cart_id: int,
+    item_id: int,
+    quantity: int,
+    service: CartItemService = Depends(get_cart_item_service),
+) -> BaseResponse[CartItemResponse]:
+    """Override the quantity of an existing item in the cart."""
+    try:
+        cart_item = service.update_item_quantity(cart_id, item_id, quantity)
+        return BaseResponse.create_success(data=cart_item)
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
