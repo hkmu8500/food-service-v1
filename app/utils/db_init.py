@@ -31,7 +31,7 @@ def init_db():
 
 def init_item():
     service = get_item_service(get_db_session_sync())
-    service.create_item(ItemModel(name = "Bugger", description = "Bugger description", price = 100,
+    service.create_item(ItemModel(name = "Burger", description = "Bugger description", price = 100,
                                   category = CategoryEnum.MAIN_COURSES,
                                   imageUrl = "https://images.pexels.com/photos/1639557/pexels-photo-1639557.jpeg",
                                   available = True), )
