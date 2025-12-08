@@ -26,7 +26,7 @@ if __name__ == "__main__":
     type(mock_user_model1).name = PropertyMock(return_value="Kevin")
 
     mock_service1 = MagicMock()
-    mock_service1.signup.return_value = mock_user_model1
+    mock_service1.signup.return_value = mock_user_model1 
     mock_service1.login.return_value = mock_user_model1
 
     # Test 2
