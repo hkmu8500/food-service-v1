@@ -12,9 +12,16 @@ setup_cors(app)
 register_exception_handlers(app)
 
 
-# todo should use lifespan
+'''
+Why comment the init db operation?
+There  is a wired issue on_event annotation and lifespan, these events notification occassionally not working in serverless
+cloud like "Vercel".
+Base on above situation, the init_db() will execute in possible case, when it executed, it will panic caused by the primary key conflict.
+So, we comment the init_db() operation, If you want to init the db, please call admin router "/api/admin/table/refreshAll".
+'''
 @app.on_event("startup")
 def on_startup():
     # Initialize database on startup
-    create_tables()
-    init_db()
+    # create_tables()
+    # init_db()
+    None
